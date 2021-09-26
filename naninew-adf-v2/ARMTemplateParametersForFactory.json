@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "naninew-adf-v2"
+		},
+		"LS_newsql_connectionString": {
+			"value": ""
+		},
+		"LS_keyvault_properties_typeProperties_baseUrl": {
+			"value": "https://naninew-kv.vault.azure.net/"
+		},
+		"LS_newblob_properties_typeProperties_connectionString_secretName": {
+			"value": "Connectionstring"
+		}
+	}
+}
