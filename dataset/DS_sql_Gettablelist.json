@@ -1,0 +1,13 @@
+{
+	"name": "DS_sql_Gettablelist",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_newsql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

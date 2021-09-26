@@ -1,0 +1,34 @@
+{
+	"name": "DS_abs_json_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_newblob",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sinkcontainer": {
+				"type": "string"
+			},
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().sinkcontainer",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

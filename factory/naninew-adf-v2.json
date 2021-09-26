@@ -1,0 +1,9 @@
+{
+	"name": "naninew-adf-v2",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a40323e3-98a5-4016-be53-5598b4ab5ecb",
+		"tenantId": "0e76a106-1358-459b-b832-005a5e5ffc98"
+	}
+}

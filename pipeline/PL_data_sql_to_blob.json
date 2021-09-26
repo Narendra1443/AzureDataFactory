@@ -1,0 +1,151 @@
+{
+	"name": "PL_data_sql_to_blob",
+	"properties": {
+		"activities": [
+			{
+				"name": "nani copy activity",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 2
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_sql_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"sourcetablename": {
+								"value": "@pipeline().parameters.pptablename",
+								"type": "Expression"
+							},
+							"sourceschemaname": {
+								"value": "@pipeline().parameters.ppschemaname",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_abs_json_sink",
+						"type": "DatasetReference",
+						"parameters": {
+							"sinkcontainer": {
+								"value": "@pipeline().parameters.ppcontainername",
+								"type": "Expression"
+							},
+							"filename": {
+								"value": "@pipeline().parameters.ppfilename",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "success_Notification",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "nani copy activity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-29.eastus.logic.azure.com:443/workflows/8f65e748c5f74d2eb78d734440d95c2a/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ZMLLKdXaIBJSoN5J8jGzsqzJXjFMmy5IZJoecK0toz0",
+					"method": "POST",
+					"body": {
+						"datafactoryname": "@{pipeline() .DataFactory}",
+						"emailto": "ravindraimmaneni222@gmail.com",
+						"pipelinename": "@{pipeline() .pipeline}",
+						"errormessage": "pipeline Succeeded!",
+						"status": "@{activity('nani copy activity').status}",
+						"runid": "@{pipeline().RunId}"
+					}
+				}
+			},
+			{
+				"name": "failure_Notification",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "nani copy activity",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-29.eastus.logic.azure.com:443/workflows/8f65e748c5f74d2eb78d734440d95c2a/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ZMLLKdXaIBJSoN5J8jGzsqzJXjFMmy5IZJoecK0toz0",
+					"method": "POST",
+					"body": {
+						"datafactoryname": "@{pipeline() .DataFactory}",
+						"emailto": "ravindraimmaneni222@gmail.com",
+						"pipelinename": "@{pipeline() .pipeline}",
+						"errormessage": "pipeline Failed!",
+						"status": "@{activity('nani copy activity').status}",
+						"runid": "@{pipeline().RunId}"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"ppschemaname": {
+				"type": "string"
+			},
+			"pptablename": {
+				"type": "string"
+			},
+			"ppcontainername": {
+				"type": "string"
+			},
+			"ppfilename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-09-23T12:37:49Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
