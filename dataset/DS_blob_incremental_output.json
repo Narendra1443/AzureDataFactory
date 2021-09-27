@@ -1,0 +1,18 @@
+{
+	"name": "DS_blob_incremental_output",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_newblob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "incrementaldata"
+			}
+		},
+		"schema": {}
+	}
+}

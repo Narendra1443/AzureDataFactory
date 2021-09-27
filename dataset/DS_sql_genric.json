@@ -1,0 +1,12 @@
+{
+	"name": "DS_sql_genric",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_newsql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
