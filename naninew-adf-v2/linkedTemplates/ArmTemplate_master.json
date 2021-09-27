@@ -11,13 +11,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_newsql'"
 		},
-		"LS_keyvault_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://naninew-kv.vault.azure.net/"
-		},
 		"LS_newblob_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "Connectionstring"
+		},
+		"LS_keyvault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://naninew-kv.vault.azure.net/"
 		},
 		"containerUri": {
 			"type": "string",
